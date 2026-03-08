@@ -1,2 +1,7 @@
 #!/bin/bash
 pkg up -y
+apt-mark showmanual > ~/packages.txt
+
+config add ~/packages.txt
+config commit -m "Update packages.txt"
+config push
