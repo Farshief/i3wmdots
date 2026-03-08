@@ -1,0 +1,119 @@
+#!/bin/bash
+date=$(date '+%Y_%m_%d');
+year=$(date '+%Y');
+
+# Set messages and camera directories into variables
+messages_dir=/sdcard/Pictures/Messages/;
+camera_dir=/sdcard/DCIM/Camera/;
+
+# Colors
+txtgreen='\e[38;5;40m';
+txtwhite='\e[0;37m';
+txtblue='\e[38;5;153m';
+
+# Functions
+function backup_shortcuts() {
+  for name in ~/.termux/widget/dynamic_shortcuts/*; do
+    echo "Backing up ${name##*/}";
+    rclone copy "${name}" "nextcloud:/Phone-Backup/Termux/Shortcuts";
+  done
+}
+
+function update_obsidian() {
+  pushd /sdcard/Documents/Vaults
+  git pull
+  git add .
+  git commit -m "Mobile Commit"
+  git push
+  popd
+}
+
+echo -e "${txtgreen}Checking for photos and videos${txtwhite}";
+echo -e "${txtblue}*** *** *** *** ***${txtwhite}";
+echo;
+
+if [ -z "$(ls -A ${messages_dir})" ]; then
+  echo "No files to process";
+  echo;
+else
+
+  echo;
+  echo;
+
+  echo -e "${txtgreen}Checking for HEIC files${txtwhite}";
+  echo -e "${txtblue}*** *** *** *** ***${txtwhite}";
+  echo;
+
+  for name in ${messages_dir}*.heic; do
+     if [ "${name}" == "${messages_dir}*.heic" ];
+      then
+      echo "No files to process";
+    else
+      echo "Processing ${name##*/}";
+      mv "${name}" "${name%.*}.jpeg";
+    fi
+  done
+
+  echo;
+  echo;
+
+  echo -e "${txtgreen}Moving to Sync Folder${txtwhite}";
+  echo -e "${txtblue}*** *** *** *** ***${txtwhite}";
+  echo;
+
+  for name in ${messages_dir}*; do
+    echo "Moving ${name##*/}";
+    mv "${name}" "${camera_dir}";
+  done
+
+  echo;
+  echo;
+fi
+
+echo -e "${txtgreen}Checking for camera photos and videos${txtwhite}";
+echo -e "${txtblue}*** *** *** *** ***${txtwhite}";
+echo;
+
+
+for name in ${camera_dir}.trashed*; do
+  rm "${name}";
+done
+
+if [ -z "$(ls -A ${camera_dir})" ]; then
+  echo "No files to Sync";
+  echo;
+else
+  echo -e "${txtgreen}Syncing to Nextcloud${txtwhite}";
+  echo;
+
+  for name in ${camera_dir}*; do
+    echo "Syncing ${name##*/}";
+    rclone move "${name}" "nextcloud:/Photos/${year}/";
+  done
+fi
+
+echo -e "${txtgreen}Syncing Obsidian${txtwhite}";
+echo;
+update_obsidian
+
+echo -e "${txtgreen}Would you like to backup Termux Dynamic Shortcuts?${txtwhite}";
+#echo -e "${txtblue}*** *** *** *** ***${txtwhite}";
+#echo;
+
+while true; do
+  read -r -p ">(y/N): " answer
+  case $answer in
+    Y|y ) backup_shortcuts; break;;
+    N|n ) break;;
+    ""  ) break;;
+    *   ) echo "Invalid Input";
+  esac
+done
+
+echo -e "${txtgreen}*** *** *** *** ***";
+echo -e "Done! Press any key to exit...";
+echo -e "*** *** *** *** ***";
+read -s -n 1
+
+echo -e "${txtblue}Goodbye${txtwhite}";
+sleep 1;
