@@ -7,10 +7,14 @@ set $mod Mod4
 # is used in the bar {} block below.
 font pango:JetBrains Mono 8
 
-# set default window borders
+# Default window borders
 default_border pixel 3
 default_floating_border pixel 3
 
+# Gap settings
+gaps inner 5
+gaps outer 10
+smart_gaps off
 
 # Autostart Picom as daemon
 exec --no-startup-id picom -b
