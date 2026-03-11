@@ -21,6 +21,7 @@ fmt
 gawk
 gcc-default
 git
+glfw
 golang
 gpgv
 grep
@@ -137,6 +138,7 @@ wlr-randr
 x11-repo
 xfce4
 xorg-font-util
+xorg-mkfontscale
 xorg-xev
 xorg-xlsfonts
 xorgproto
