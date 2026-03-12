@@ -1,6 +1,9 @@
+alacritty
 android-tools
 apt
 bash
+bash-completion
+binutils
 build-essential
 bzip2
 ca-certificates
@@ -13,8 +16,10 @@ debianutils
 dialog
 diffutils
 dos2unix
+doxygen
 dpkg
 ed
+extra-cmake-modules
 findutils
 firefox
 fmt
@@ -24,6 +29,7 @@ git
 glfw
 golang
 gpgv
+graphviz
 grep
 gtkmm2
 gtkmm3
@@ -73,6 +79,7 @@ libunistring
 libwayland-protocols
 lsof
 luarocks
+make
 mandoc
 mesa-dev
 nano
@@ -88,8 +95,11 @@ pcre2
 picom
 pipewire
 procps
+proot
+proot-distro
 psmisc
 pulseaudio
+python
 qt6-qt5compat
 qt6-qtbase
 qt6-qtbase-gtk-platformtheme
@@ -109,8 +119,10 @@ readline
 resolv-conf
 ruby
 rust
+sdl2-net
 sed
 starship
+strace
 subversion
 swaybg
 tar
