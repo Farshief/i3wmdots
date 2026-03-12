@@ -2,6 +2,7 @@
 pkg up -y
 apt-mark showmanual > ~/packages.txt
 config='git --git-dir=/data/data/com.termux/files/home/.cfg/ --work-tree=/data/data/com.termux/files/home'
+$config pull
 $config add ~/packages.txt
 $config commit -m "Update packages.txt"
 $config push
