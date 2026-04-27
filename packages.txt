@@ -13,6 +13,7 @@ dash
 debianutils
 dialog
 diffutils
+dnsutils
 dos2unix
 dpkg
 ed
