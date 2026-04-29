@@ -1,3 +1,4 @@
+aapt
 android-tools
 apt
 bash
